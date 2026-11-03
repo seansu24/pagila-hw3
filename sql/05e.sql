@@ -18,3 +18,20 @@
  * ```
  * This problem should be solved by a self join on the "film_category" table.
  */
+
+SELECT g.title FROM (
+    SELECT * 
+    FROM film_category
+    JOIN category USING (category_id)
+    JOIN film USING (film_id)
+) f
+JOIN (
+    SELECT * 
+    FROM film_category
+    JOIN category USING (category_id)
+    JOIN film USING (film_id)
+) g USING (name)
+WHERE f.title = 'AMERICAN CIRCUS'
+GROUP BY g.title
+HAVING count(name) > 1
+ORDER BY title;
